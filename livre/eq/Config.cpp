@@ -323,6 +323,7 @@ bool Config::frame()
 
     ApplicationParameters& params = getApplicationParameters();
     FrameSettings& frameSettings = _impl->framedata.getFrameSettings();
+    frameSettings.resetFrameTime();
 
     const FrameUtils frameUtils( params.frames, _impl->dataFrameRange );
     params.frames = frameUtils.getFrameRange();
@@ -354,6 +355,7 @@ bool Config::frame()
 
     eq::Config::startFrame( version );
     eq::Config::finishFrame();
+    frameSettings.regulateFrameRate( 3 );
     return true;
 }
 

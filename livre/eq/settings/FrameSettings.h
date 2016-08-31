@@ -108,6 +108,9 @@ public:
      */
     bool getGrabFrame() const;
 
+    void resetFrameTime() { frameStart_ = clock(); }
+    void regulateFrameRate( const float fps ) const;
+
 private:
 
     void serialize( co::DataOStream& os, const uint64_t dirtyBits ) final;
@@ -119,6 +122,7 @@ private:
     bool statistics_;
     bool help_;
     bool grabFrame_;
+    std::clock_t frameStart_;
 };
 
 

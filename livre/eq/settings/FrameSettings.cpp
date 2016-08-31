@@ -24,6 +24,9 @@
 #include <co/dataOStream.h>
 #include <co/dataIStream.h>
 
+#include <chrono>
+#include <thread>
+
 namespace livre
 {
 
@@ -122,6 +125,15 @@ void FrameSettings::setGrabFrame( const bool setValue )
 bool FrameSettings::getGrabFrame() const
 {
     return grabFrame_;
+}
+
+void FrameSettings::regulateFrameRate( const float fps ) const
+{
+    const int64_t frameDuration =
+        ( clock() - frameStart_ ) / (double) CLOCKS_PER_SEC * 1000.0; // seconds
+
+    const int64_t sleepTime = ( 1.f / fps ) * 1000 - frameDuration;
+    std::this_thread::sleep_for( std::chrono::milliseconds( sleepTime ));
 }
 
 }
